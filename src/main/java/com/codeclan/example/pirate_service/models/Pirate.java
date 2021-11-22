@@ -1,5 +1,5 @@
 
-package models;
+package com.codeclan.example.pirate_service.models;
 
 import javax.persistence.*;
 
