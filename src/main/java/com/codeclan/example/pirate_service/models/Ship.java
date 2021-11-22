@@ -1,13 +1,24 @@
 
 package com.codeclan.example.pirate_service.models;
 
-import java.util.ArrayList;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
+
+@Entity
+@Table(name = "ships")
 public class Ship {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(name = "name")
     private String name;
-    private ArrayList<Pirate> pirates;
+    @JsonIgnoreProperties({"ship"})
+    @OneToMany(mappedBy = "ship")
+    private List<Pirate> pirates;
 
     public Ship(String name) {
         this.name = name;
@@ -34,11 +45,11 @@ public class Ship {
         this.name = name;
     }
 
-    public ArrayList<Pirate> getPirates() {
+    public List<Pirate> getPirates() {
         return pirates;
     }
 
-    public void setPirates(ArrayList<Pirate> pirates) {
+    public void setPirates(List<Pirate> pirates) {
         this.pirates = pirates;
     }
 }

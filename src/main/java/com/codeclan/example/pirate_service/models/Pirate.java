@@ -17,6 +17,9 @@ public class Pirate {
     private String lastName;
     @Column(name = "age")
     private int age;
+    @ManyToOne
+    @JoinColumn(name = "ship_id", nullable = false)
+    private Ship ship;
 
 
     //    'PoJo' = 'Plain Old Java Object', required by Spring..
@@ -27,10 +30,11 @@ public class Pirate {
 
     //    3. Finally, they need an ID of type long..
 
-    public Pirate(String firstName, String lastName, int age) {
+    public Pirate(String firstName, String lastName, int age, Ship ship) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.age = age;
+        this.ship = ship;
     }
 
     //    Below is an example of a default constructor..
@@ -71,5 +75,13 @@ public class Pirate {
 
     public void setAge(int age) {
         this.age = age;
+    }
+
+    public Ship getShip() {
+        return ship;
+    }
+
+    public void setShip(Ship ship) {
+        this.ship = ship;
     }
 }
