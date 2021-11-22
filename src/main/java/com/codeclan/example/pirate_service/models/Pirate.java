@@ -1,7 +1,12 @@
 
 package com.codeclan.example.pirate_service.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.hibernate.annotations.Cascade;
+
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "pirates")
@@ -21,6 +26,23 @@ public class Pirate {
     @JoinColumn(name = "ship_id", nullable = false)
     private Ship ship;
 
+    @ManyToMany
+    @JsonIgnoreProperties({"pirates"})
+    @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
+    @JoinTable(
+            name = "pirates_raids",
+            joinColumns = { @JoinColumn(
+                    name = "pirate_id",
+                    nullable = false,
+                    updatable = false)
+            },
+            inverseJoinColumns = { @JoinColumn(
+                    name = "raid_id",
+                    nullable = false,
+                    updatable = false)
+            }
+    )
+    private List<Raid> raids;
 
     //    'PoJo' = 'Plain Old Java Object', required by Spring..
 
@@ -35,6 +57,7 @@ public class Pirate {
         this.lastName = lastName;
         this.age = age;
         this.ship = ship;
+        this.raids = new ArrayList<>();
     }
 
     //    Below is an example of a default constructor..
@@ -83,5 +106,17 @@ public class Pirate {
 
     public void setShip(Ship ship) {
         this.ship = ship;
+    }
+
+    public List<Raid> getRaids() {
+        return raids;
+    }
+
+    public void setRaids(List<Raid> raids) {
+        this.raids = raids;
+    }
+
+    public void addRaid(Raid raid){
+        this.raids.add(raid);
     }
 }
