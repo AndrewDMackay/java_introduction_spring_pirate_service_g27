@@ -4,23 +4,28 @@ package models;
 import javax.persistence.*;
 
 @Entity
-@Table(name="pirates")
+@Table(name = "pirates")
 public class Pirate {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private Long id;
+    @Column(name = "first_name")
+    private String firstName;
+    @Column(name = "last_name")
+    private String lastName;
+    @Column(name = "age")
+    private int age;
+
 
     //    'PoJo' = 'Plain Old Java Object', required by Spring..
 
     //    A 'PoJo' requires 1. getters, and setters..
-    //
+
     //    2. a default constructor, see below..
 
     //    3. Finally, they need an ID of type long..
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private String firstName;
-    private String lastName;
-    private int age;
 
     public Pirate(String firstName, String lastName, int age) {
         this.firstName = firstName;
